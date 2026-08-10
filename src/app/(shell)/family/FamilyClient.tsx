@@ -195,9 +195,9 @@ export default function FamilyClient({
       <p className="text-xs text-ink/70 dark:text-paper/70">
         Progress saves on this device first, so nothing is lost offline. Sign in to sync a learner
         across devices and to put the whole roster on one family plan.{" "}
-        <Link href="/account" className="font-bold text-sky-ink hover:underline">Account &amp; sync →</Link>
+        <Link href="/account" className="inline-flex min-h-11 items-center px-2 font-bold text-sky-ink hover:underline">Account &amp; sync →</Link>
         {" · "}
-        <Link href="/premium" className="font-bold text-sky-ink hover:underline">See plans →</Link>
+        <Link href="/premium" className="inline-flex min-h-11 items-center px-2 font-bold text-sky-ink hover:underline">See plans →</Link>
       </p>
     </div>
   );

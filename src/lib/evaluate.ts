@@ -2629,7 +2629,7 @@ export function correctAnswerText(spec: TWidget): string {
       return `${spec.targetCell} within ${spec.targetCondition}; the condition supplies the denominator`;
     }
     case "conicLocusLab": return `eccentricity e = ${(spec.targetEccentricityTenths/10).toFixed(1)}`;
-    case "derivativeRuleLab": return spec.mode === "product" ? `h ≤ ${spec.targetH}, so the second-order corner vanishes` : `inner rate ${spec.targetInnerRate} and outer rate ${spec.targetOuterRate}, giving total rate ${spec.targetInnerRate*spec.targetOuterRate}`;
+    case "derivativeRuleLab": return spec.mode === "product" ? `h ≤ ${spec.targetH}, so the second-order corner vanishes` : spec.mode === "quotient" ? `u′ = ${spec.targetInnerRate} and v′ = ${spec.targetOuterRate}, giving (${spec.targetInnerRate}·${spec.quotientV} − ${spec.quotientU}·${spec.targetOuterRate})/${spec.quotientV}²` : `inner rate ${spec.targetInnerRate} and outer rate ${spec.targetOuterRate}, giving total rate ${spec.targetInnerRate*spec.targetOuterRate}`;
     case "relatedRatesLab": return `ladder foot x = ${spec.targetX}, with x² + y² = ${spec.ladderLength}²`;
     case "solveBalance": {
       const xs = (spec.c - spec.b) / spec.a;

@@ -12,6 +12,7 @@ import { TRAIL, TRAIL_STAGE } from "@/lib/trail";
 import type { TLesson, TStep } from "@/lib/schema";
 import { AppIcon, StepSegments } from "@/components/ui";
 import { canSpeak, cancelSpeech, narrationEnabled, narrationFor, setNarrationEnabled, speak } from "@/lib/speech";
+import { MathProse } from "@/components/math/MathText";
 /* ---------------- Rendering ---------------- */
 
 /**
@@ -81,7 +82,7 @@ export function Rich({ text, early }: { text: string; early?: boolean }) {
   const parts = text.split("**");
   return (
     <p className={`${early ? "text-xl" : "text-lg"} leading-relaxed`}>
-      {parts.map((p, i) => (i % 2 === 1 ? <strong key={i}>{p}</strong> : <span key={i}>{p}</span>))}
+      {parts.map((p, i) => (i % 2 === 1 ? <strong key={i}><MathProse text={p} /></strong> : <span key={i}><MathProse text={p} /></span>))}
     </p>
   );
 }

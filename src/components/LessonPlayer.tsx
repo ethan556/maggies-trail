@@ -24,6 +24,7 @@ import { responseCopy } from "@/lib/adaptivePolicy";
 import { classifyBaseTen, classifyFraction, classifyGraph, classifyNumberLine, classifyRatio, strategyCue, type Strategy } from "@/lib/strategyClassifiers";
 import { sameCMLValue, usePlayer } from "./playerStore";
 import { GoalRing, Narration, Rich, SparkBurst, SummitRoute, TrailAtmosphere, TrailClearingLabel, TrailDots, TrailWaypoint } from "./playerChrome";
+import { MathProse } from "@/components/math/MathText";
 
 
 export interface NextLesson {
@@ -596,7 +597,7 @@ export default function LessonPlayer({
                 <AppIcon name="compass" size={14} />
                 Make a prediction first
               </p>
-              <p className="mt-1 text-lg font-bold">{s.predict.prompt}</p>
+              <p className="mt-1 text-lg font-bold"><MathProse text={s.predict.prompt} /></p>
               <div className="mt-3 grid gap-2" role="radiogroup" aria-label={s.predict.prompt}>
                 {(predictOrder ?? s.predict.options).map((o) => (
                   <button
@@ -607,7 +608,7 @@ export default function LessonPlayer({
                     onClick={() => st.commitPrediction(o.id)}
                     className="pressable min-h-11 rounded-card border border-ink/12 bg-white px-4 py-3 text-left text-base font-bold text-ink shadow-[0_1px_2px_rgba(34,49,79,0.03)] hover:border-tangerine/70 hover:bg-tangerine/5 dark:border-paper/15"
                   >
-                    {o.label}
+                    <MathProse text={o.label} />
                   </button>
                 ))}
               </div>
@@ -727,7 +728,7 @@ export default function LessonPlayer({
           <div data-testid="feedback-scroll" className="max-h-[42dvh] overflow-y-auto overscroll-contain">
             {st.phase === "retry" && (
               <StatusBanner tone="error" icon="target" title={COPY.nudgeBanner}>
-                <p>{st.feedback}</p>
+                <p><MathProse text={st.feedback} /></p>
                 <p className="mt-1 text-xs font-semibold text-ink/70 dark:text-paper/70">
                   Your work is still on the stage — adjust it and check again.
                 </p>
@@ -744,23 +745,23 @@ export default function LessonPlayer({
                   <span className="rounded-pill bg-leaf/15 px-2 py-0.5 text-sm tabular-nums">+{st.lastXp} XP</span>
                 }
               >
-                {st.feedback && <p>{st.feedback}</p>}
+                {st.feedback && <p><MathProse text={st.feedback} /></p>}
               </StatusBanner>
               </div>
             )}
             {st.phase === "revealed" && s.widget && (
               <StatusBanner tone="info" icon="route" title={COPY.revealBanner}>
-                <p>{st.feedback}</p>
+                <p><MathProse text={st.feedback} /></p>
                 <div className="mt-2 flex flex-wrap items-stretch gap-2">
                   {revealYours !== null && revealYours !== revealAnswer && (
                     <p className="inline-flex flex-wrap items-baseline gap-x-2 rounded-lg bg-berry/10 px-2.5 py-1">
                       <strong className="text-berry-ink">You answered</strong>
-                      <span className="font-bold">{revealYours}</span>
+                      <span className="font-bold"><MathProse text={revealYours} /></span>
                     </p>
                   )}
                   <p className="inline-flex flex-wrap items-baseline gap-x-2 rounded-lg bg-sky/10 px-2.5 py-1">
                     <strong className="text-sky-ink">{COPY.answerWas}</strong>
-                    <span className="font-bold">{revealAnswer}</span>
+                    <span className="font-bold"><MathProse text={revealAnswer} /></span>
                   </p>
                 </div>
               </StatusBanner>
@@ -784,7 +785,7 @@ export default function LessonPlayer({
                         ; the model showed <strong>{outcome?.label ?? ""}</strong>.
                       </>
                     )}{" "}
-                    {s.predict.reveal}
+                    <MathProse text={s.predict.reveal} />
                   </p>
                 </StatusBanner>
               );

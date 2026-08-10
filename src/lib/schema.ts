@@ -5994,19 +5994,22 @@ export const ConicLocusLabSpec = z.object({
   highFeedback: z.string().min(1)
 });
 
-/** derivativeRuleLab — expose the mechanism behind product and chain rules. Product mode shrinks
- * the second-order corner of a changing rectangle; chain mode coordinates two local rates through
- * a nested input→inner→outer machine. */
+/** derivativeRuleLab — expose the mechanism behind product, quotient, and chain rules. Product
+ * mode shrinks the second-order corner of a changing rectangle; quotient mode makes the two
+ * competing numerator products and the denominator square respond to the local rates; chain mode
+ * coordinates two local rates through a nested input→inner→outer machine. */
 export const DerivativeRuleLabSpec = z.object({
   type: z.literal("derivativeRuleLab"),
   prompt: z.string().min(1),
-  mode: z.enum(["product", "chain"]),
+  mode: z.enum(["product", "quotient", "chain"]),
   targetH: z.number().positive().max(0.5).default(0.1),
   startH: z.number().positive().max(2).default(1),
   targetInnerRate: z.number().int().min(1).max(6).default(3),
   targetOuterRate: z.number().int().min(1).max(6).default(4),
   startInnerRate: z.number().int().min(1).max(6).default(1),
   startOuterRate: z.number().int().min(1).max(6).default(1),
+  quotientU: z.number().int().positive().max(12).default(6),
+  quotientV: z.number().int().positive().max(12).default(4),
   requiredMoves: z.number().int().min(2).max(10).default(4),
   successFeedback: z.string().min(1),
   explorationFeedback: z.string().min(1),

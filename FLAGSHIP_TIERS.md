@@ -16,7 +16,7 @@ interaction or under the B bar. D: no interactive step, or misconception sensiti
 | K-2 | 364 | 46 | 0 | 0 | 410 |
 | 3-5 | 333 | 86 | 0 | 0 | 419 |
 | 6-8 | 124 | 121 | 0 | 0 | 245 |
-| HS | 365 | 204 | 57 | 1 | 627 |
+| HS | 366 | 205 | 56 | 0 | 627 |
 
 **K–8 targets** — Tier A 821/200–250 ✓ · Tier B 253/200–300 ✓.
 
@@ -94,4 +94,4 @@ interaction or under the B bar. D: no interactive step, or misconception sensiti
 | # | lesson | course (grade) | tier | total | gaps | focus domains | priority |
 |--:|---|---|---|--:|---|---|--:|
 
-Totals: 1701 lessons · A 1186 · B 457 · C 57 · D 1.
+Totals: 1701 lessons · A 1187 · B 458 · C 56 · D 0.

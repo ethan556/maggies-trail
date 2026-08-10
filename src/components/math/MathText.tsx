@@ -12,12 +12,13 @@
  * Stage contract: colors inherit currentColor, so math is ink-on-light inside `.stage` in
  * BOTH themes — same rule every figure follows.
  *
- * Adoption status (honest): Phase B ships the pipeline unwired. No route imports this file
- * yet, so today's bundle cost is zero; KaTeX (~72KB gz + fonts, loaded once, lazily) is
- * paid only when Phase C adopts it. This is recorded, not hidden.
+ * Adoption status: Wave 4 wires authored power shorthand into lesson prose, prediction copy,
+ * feedback, and widget prompts/options. KaTeX remains lazy: a lesson without authored math
+ * tokens pays no renderer or stylesheet cost.
  */
 import { useEffect, useState } from "react";
 import type { RenderedMath } from "@/lib/math/renderMath";
+import { authoredMathParts } from "@/lib/math/authoredMath";
 
 type Renderer = (tex: string, display: boolean) => RenderedMath;
 let loaded: Renderer | null = null;
@@ -50,6 +51,16 @@ export function MathInline({ tex }: { tex: string }) {
   const out = useMath(tex, false);
   if (!out) return <span className="math-inline">{tex}</span>;
   return <span className="math-inline" dangerouslySetInnerHTML={{ __html: out.html }} />;
+}
+
+/** Mixed prose + authored power shorthand. Only the power tokens are sent to
+ * KaTeX; surrounding words and punctuation retain normal wrapping and speech. */
+export function MathProse({ text }: { text: string }) {
+  return <>{authoredMathParts(text).map((part, index) => (
+    part.tex
+      ? <span key={index}><MathInline tex={part.tex} />{part.text}</span>
+      : <span key={index}>{part.text}</span>
+  ))}</>;
 }
 
 export function MathDisplay({ tex }: { tex: string }) {

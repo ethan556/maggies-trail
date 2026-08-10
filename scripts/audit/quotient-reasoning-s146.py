@@ -3,7 +3,7 @@ import json, hashlib, copy, math
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'scripts/audit/baselines/s146'
-S145_HASHES=json.loads((ROOT/'SESSION145_LESSON_HASHES.json').read_text())['files']
+S145_HASHES=json.loads((ROOT/'SESSION145_LESSON_HASHES.json').read_text(encoding='utf-8'))['files']
 TARGETS={
 'dop-03-03':ROOT/'content/courses/decimal-operations/lessons/dop-03-03.json',
 'ns-01-02':ROOT/'content/courses/number-system/lessons/ns-01-02.json',
@@ -77,7 +77,7 @@ def old_answer(w):
  raise AssertionError(w['type'])
 errors=[];records=[];main=remedial=0
 for lid,path in TARGETS.items():
- before=json.loads((BASE/f'{lid}.json').read_text());after=json.loads(path.read_text())
+ before=json.loads((BASE/f'{lid}.json').read_text(encoding='utf-8'));after=json.loads(path.read_text(encoding='utf-8'))
  bs=surfaces(before);as_=surfaces(after)
  if [(k,i) for k,i,_,_ in bs]!=[(k,i) for k,i,_,_ in as_]:errors.append(f'{lid}: surface order/id drift')
  for (kind,sid,bstep,bw),(_,_,astep,w) in zip(bs,as_):
@@ -110,9 +110,9 @@ for lid,path in TARGETS.items():
 # Non-target lesson bytes
 changed=[]
 for p in (ROOT/'content/courses').glob('*/lessons/*.json'):
- rel=p.relative_to(ROOT).as_posix(); current=hashlib.sha256(p.read_bytes()).hexdigest()
+ rel=p.relative_to(ROOT).as_posix(); current=hashlib.sha256(p.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
  if S145_HASHES.get(rel)!=current: changed.append(rel)
-expected_changed={str(p.relative_to(ROOT)) for p in TARGETS.values()}
+expected_changed={p.relative_to(ROOT).as_posix() for p in TARGETS.values()}
 # S183: counting-to-100-k, the first K5-expansion course — 18 NEW lessons (no prior baseline; created by the course factory)
 # S191: Batch A completion — two new G1 courses built entirely on PRE-EXISTING generator
 # families (g1-add-subtract; + unknown-letter for equations-unknowns-g1). New files only;
@@ -223,11 +223,13 @@ S205J_AUTHORIZED={'content/courses/derivative-rules/lessons/dr-04-03.json'}  # S
 allowed_later |= S205J_AUTHORIZED
 S210_S218_AUTHORIZED={'content/courses/expressions-equations/lessons/ee-05-02.json','content/courses/polygons-quadrilaterals/lessons/pq-05-03.json','content/courses/similarity/lessons/sy-02-03.json','content/courses/systems-equations/lessons/se-01-03.json','content/courses/two-step-equations/lessons/tse-01-01.json','content/courses/two-step-equations/lessons/tse-04-01.json','content/courses/two-step-equations/lessons/tse-04-02.json','content/courses/vectors-matrices/lessons/vec-05-03.json'}  # S220 closure maintenance: eight later lesson changes already individually authorized by content-change-proof-s151c.mjs (S210–S218).
 allowed_later |= S210_S218_AUTHORIZED
+S224_AUTHORIZED={'content/courses/derivative-rules/lessons/dr-03-02.json','content/courses/exponents-polynomials/lessons/ep-02-01.json'}  # S224 Wave 04 batch 1: exact-fit quotient-rule and like-term interaction repairs.
+allowed_later |= S224_AUTHORIZED
 if set(changed)!=expected_changed|allowed_later:errors.append(f'changed lesson set mismatch: {changed}')
-report={'session':146,'engine':'quotientReasoningLab','targetLessons':list(TARGETS),'experienceCount':len(records),'mainExperiences':main,'remedialExperiences':remedial,'changedLessonFiles':sorted(expected_changed),'allowedLaterSessionChanges':sorted(allowed_later),'variantDeclarationsPreserved':all(r['variantPreserved'] for r in records),'records':records,'baselineHashes':{lid:hashlib.sha256((BASE/f'{lid}.json').read_bytes()).hexdigest() for lid in TARGETS},'errors':errors,'passed':len(records)==37 and main==32 and remedial==5 and not errors}
-(ROOT/'QUOTIENT_REASONING_S146.json').write_text(json.dumps(report,indent=2)+'\n')
+report={'session':146,'engine':'quotientReasoningLab','targetLessons':list(TARGETS),'experienceCount':len(records),'mainExperiences':main,'remedialExperiences':remedial,'changedLessonFiles':sorted(expected_changed),'allowedLaterSessionChanges':sorted(allowed_later),'variantDeclarationsPreserved':all(r['variantPreserved'] for r in records),'records':records,'baselineHashes':{lid:hashlib.sha256((BASE/f'{lid}.json').read_bytes().replace(b'\r\n',b'\n')).hexdigest() for lid in TARGETS},'errors':errors,'passed':len(records)==37 and main==32 and remedial==5 and not errors}
+(ROOT/'QUOTIENT_REASONING_S146.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
 md=['# Quotient Reasoning Audit — Session 146','',f"**Result:** {'PASS' if report['passed'] else 'FAIL'} — {len(records)}/37 experiences; {main} main, {remedial} remedial.",'','## Exact closure','']+[f"- `{x}`" for x in TARGETS]+['','## Preservation','',f"- Variant declarations preserved: **{report['variantDeclarationsPreserved']}**",f"- Changed lesson files: **{len(changed)}**",'- All prompts, answers, misconception feedback, order, IDs, and non-widget authored content are checked against sealed baselines.','','## Errors','']+([f'- {e}' for e in errors] if errors else ['- None.'])
-(ROOT/'QUOTIENT_REASONING_S146.md').write_text('\n'.join(md)+'\n')
+(ROOT/'QUOTIENT_REASONING_S146.md').write_text('\n'.join(md)+'\n',encoding='utf-8',newline='\n')
 if not report['passed']:
  print('\n'.join(errors));raise SystemExit(1)
 print(f'quotient reasoning authored audit passed: {len(records)}/37; main {main}; remedial {remedial}; changed lessons {len(changed)}')

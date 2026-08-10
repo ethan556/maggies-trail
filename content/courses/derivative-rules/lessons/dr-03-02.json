@@ -49,26 +49,40 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "The minus sign, and where it comes from.",
+      "body": "Make the two numerator products compete, then track the denominator square.",
       "widget": {
-        "type": "steppedReveal",
-        "prompt": "Why a quotient has a minus and a square.",
-        "panels": [
+        "type": "derivativeRuleLab",
+        "prompt": "Set u' = 3 and v' = 1. Watch u'v − uv' form in order above v^2.",
+        "mode": "quotient",
+        "quotientU": 6,
+        "quotientV": 4,
+        "targetInnerRate": 3,
+        "targetOuterRate": 1,
+        "startInnerRate": 1,
+        "startOuterRate": 3,
+        "requiredMoves": 4,
+        "successFeedback": "u'v − uv' = 3(4) − 6(1) = 6, and v^2 = 16, so the quotient rate is 6/16 = 0.375.",
+        "explorationFeedback": "Change both local rates through at least four states before checking the target state.",
+        "mechanismFeedback": "Match u' = 3 and v' = 1; the two ordered products then give the requested quotient rate."
+      },
+      "predict": {
+        "prompt": "With u = 6, v = 4, u' = 3, and v' = 1, which ordered numerator belongs in the quotient rule?",
+        "options": [
           {
-            "title": "Rewrite it",
-            "body": "u/v is u · v⁻¹. There is no new idea here — a quotient is a product with a negative power."
+            "id": "forward",
+            "label": "3·4 − 6·1"
           },
           {
-            "title": "Push it through",
-            "body": "The product rule gives u′·v⁻¹ + u·(−1)v⁻²·v′. The minus sign is not a convention someone chose: it falls out of differentiating v⁻¹."
+            "id": "reverse",
+            "label": "6·1 − 3·4"
           },
           {
-            "title": "Tidy up",
-            "body": "Put both terms over v²: (u′v − uv′)/v². The square in the denominator is the v⁻² from the chain, and the minus is the −1 from the power rule. Every part of the rule has a reason."
+            "id": "divide",
+            "label": "3/4 − 6/1"
           }
         ],
-        "continueFeedback": "Keep going — the minus sign is about to earn its place.",
-        "successFeedback": "The minus comes from differentiating v⁻¹, and the v² comes from the same place. Nothing was invented."
+        "outcomeId": "forward",
+        "reveal": "The top rate acts on the bottom first: u'v − uv'. Reversing those products negates every quotient-rule answer."
       }
     },
     {

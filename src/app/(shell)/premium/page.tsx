@@ -67,7 +67,7 @@ export default function PremiumPage() {
         ) : (
           <>
             You&apos;re signed out, so a plan would unlock only this device.{/* roster note */}{" "}
-            <Link href="/account" className="underline">
+            <Link href="/account" className="inline-flex min-h-11 items-center px-2 underline">
               Sign in
             </Link>{" "}
             to cover your whole roster.

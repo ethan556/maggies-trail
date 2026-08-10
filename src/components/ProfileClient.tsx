@@ -82,7 +82,7 @@ export function MasteryPanel({ profile, courses, today }: { profile: Profile; co
           Finish a few lesson checks and your skill mastery grows here — you'll see which ideas are
           solid and which are fading and due for review.
         </p>
-        <a href="/placement" className="mt-3 inline-block font-extrabold text-sky-ink hover:underline">
+        <a href="/placement" className="mt-3 inline-flex min-h-11 items-center px-2 font-extrabold text-sky-ink hover:underline">
           Or take a 5-question placement to find your starting point →
         </a>
       </div>
@@ -478,7 +478,7 @@ export default function ProfileClient({ courses }: { courses: ProfileCourse[] })
                 className="rounded-card border border-ink/10 bg-surface shadow-e1 p-4 dark:border-paper/12"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <Link href={`/courses/${c.slug}`} className="font-extrabold hover:text-sky-ink">
+                  <Link href={`/courses/${c.slug}`} className="inline-flex min-h-11 items-center font-extrabold hover:text-sky-ink">
                     {c.title}
                   </Link>
                   <span className="text-xs font-bold tabular-nums text-ink/70 dark:text-paper/70">

@@ -10,16 +10,25 @@
  *  M3  the pipeline exists — renderMath.ts and MathText.tsx are present, and MathDisplay
  *      reserves height (the no-layout-shift contract is grep-able, and its removal fails).
  */
-import { execSync } from "node:child_process";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 
 const fail = [];
 
 // M1
-const importers = execSync(
-  `grep -rl "from \\"katex\\|from 'katex\\|import(\\"katex\\|require(\\"katex\\|katex/dist" src --include=*.ts --include=*.tsx || true`,
-  { encoding: "utf8" }
-).trim().split("\n").filter(Boolean);
+function sourceFiles(root, extensions) {
+  const out = [];
+  for (const entry of readdirSync(root, { withFileTypes: true })) {
+    const path = join(root, entry.name);
+    if (entry.isDirectory()) out.push(...sourceFiles(path, extensions));
+    else if (extensions.some((extension) => entry.name.endsWith(extension))) out.push(path.replaceAll("\\", "/"));
+  }
+  return out;
+}
+
+const importers = sourceFiles("src", [".ts", ".tsx"]).filter((file) =>
+  /from ["']katex|import\(["']katex|require\(["']katex|katex\/dist/.test(readFileSync(file, "utf8"))
+);
 for (const f of importers) {
   if (!f.startsWith("src/lib/math/") && !f.startsWith("src/components/math/")) {
     fail.push(`M1: ${f} imports katex outside the sanctioned math modules`);
@@ -28,10 +37,9 @@ for (const f of importers) {
 if (importers.length === 0) fail.push("M1: no katex importer found — the renderer is missing");
 
 // M2
-const rawLatex = execSync(
-  `grep -rlE '\\\\\\\\(frac|sqrt|int|sum|begin|dfrac|cdot)' content/courses --include=*.json || true`,
-  { encoding: "utf8" }
-).trim().split("\n").filter(Boolean);
+const rawLatex = sourceFiles("content/courses", [".json"]).filter((file) =>
+  /\\(frac|sqrt|int|sum|begin|dfrac|cdot)/.test(readFileSync(file, "utf8"))
+);
 for (const f of rawLatex) fail.push(`M2: raw LaTeX command in lesson content: ${f}`);
 
 // M3

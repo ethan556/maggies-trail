@@ -42,7 +42,7 @@ export default async function PlacementPage({ searchParams }: { searchParams: Pr
       <p className="mt-1 text-sm text-ink/70 dark:text-paper/70">
         A 12-item, domain-balanced diagnostic estimates your starting point and its uncertainty. It uses repeated evidence, confidence calibration, and prerequisite logic so one lucky answer cannot create false mastery.
       </p>
-      <Link href="/placement/methodology" className="mt-2 inline-block text-xs font-extrabold text-sky-ink underline underline-offset-2">How calibration and privacy work</Link>
+      <Link href="/placement/methodology" className="mt-2 inline-flex min-h-11 items-center px-2 text-xs font-extrabold text-sky-ink underline underline-offset-2">How calibration and privacy work</Link>
       <div className="mt-5">
         <PlacementFlow bank={placementBank} prereqs={trimmed} courseTitles={titleBySlug} lessonByTag={lessonByTag} initialGrade={initialGrade} onboardingGoal={onboardingGoal} />
       </div>

@@ -330,7 +330,7 @@ export default function DashboardClient({ courses }: { courses: DashCourse[] }) 
           <div>
             <p className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wide text-tangerine-ink"><TrailMark className="shrink-0" />New here?</p>
             <p className="font-extrabold">A 60-second placement picks your starting spot.</p>
-            <Link href="/placement" className="text-sm font-bold text-tangerine-ink hover:underline">
+            <Link href="/placement" className="inline-flex min-h-11 items-center text-sm font-bold text-tangerine-ink hover:underline">
               Take the skill check →
             </Link>
           </div>

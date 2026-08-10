@@ -1,6 +1,6 @@
 # Session 147 source transpilation
 
-- Compiler: TypeScript 5.8.3
+- Compiler: TypeScript 5.9.3
 - Files: 23
 - Syntax/transpile errors: 0
 - Result: **PASS**

@@ -120,28 +120,64 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Spot the like pair.",
+      "body": "Build the like-term families.",
       "widget": {
-        "type": "mcq",
-        "prompt": "Which pair are like terms?",
-        "options": [
+        "type": "dragBucket",
+        "prompt": "Sort each term by its variable-and-exponent signature. Like terms must land together.",
+        "buckets": [
           {
-            "id": "a",
-            "label": "4x^2 and 7x^2",
-            "correct": true,
-            "feedback": "Yes — same variable and same exponent, so they're like terms."
+            "id": "x2",
+            "label": "x^2 terms"
           },
           {
-            "id": "b",
-            "label": "4x^2 and 4x",
-            "feedback": "Different exponents (2 vs 1), so they're not like terms."
+            "id": "x1",
+            "label": "x terms"
           },
           {
-            "id": "c",
-            "label": "3x and 3",
-            "feedback": "One has a variable and one doesn't, so they're not like terms."
+            "id": "constant",
+            "label": "constants"
           }
-        ]
+        ],
+        "items": [
+          {
+            "id": "t1",
+            "label": "4x^2",
+            "bucketId": "x2",
+            "feedback": "This term's variable part is x^2, so it belongs with every other x^2 term."
+          },
+          {
+            "id": "t2",
+            "label": "7x^2",
+            "bucketId": "x2",
+            "feedback": "The coefficient 7 does not change the family: the variable part is still x^2."
+          },
+          {
+            "id": "t3",
+            "label": "4x",
+            "bucketId": "x1",
+            "feedback": "A plain x has exponent 1, so it cannot combine with an x^2 term."
+          },
+          {
+            "id": "t4",
+            "label": "-3x",
+            "bucketId": "x1",
+            "feedback": "The negative coefficient changes the amount, not the variable signature x^1."
+          },
+          {
+            "id": "t5",
+            "label": "5",
+            "bucketId": "constant",
+            "feedback": "This term has no variable, so it is a constant."
+          },
+          {
+            "id": "t6",
+            "label": "-8",
+            "bucketId": "constant",
+            "feedback": "The sign belongs to the coefficient; with no variable, the term is still a constant."
+          }
+        ],
+        "missFeedback": "Match the entire variable part, including its exponent. Coefficients and signs do not decide the family.",
+        "successFeedback": "Each family now has one shared variable signature: x^2, x^1, or no variable. Only terms inside the same family can combine."
       }
     },
     {

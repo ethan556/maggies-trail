@@ -6,7 +6,7 @@
 - **Converted experiences:** 16.
 - **Lessons:** ssg2-02-02, ssg2-02-03; each C22 → **B29** (B28 at s130 sealing; areaModel adapt capability later raised).
 - **Reviewed K–8 queue:** 61 → **0**, zero unreviewed.
-- **Product tiers:** A 1186 · B 457 · C 57 · D 1.
+- **Product tiers:** A 1187 · B 458 · C 56 · D 0.
 
 ## Independently derived grids
 

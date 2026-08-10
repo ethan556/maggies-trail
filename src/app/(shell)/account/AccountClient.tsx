@@ -242,10 +242,10 @@ export default function AccountClient() {
             </button>
           </div>
           <div className="mt-3 flex flex-wrap gap-4 text-xs font-bold">
-            <button type="button" onClick={() => requestLink("magic")} disabled={!validEmail} className="text-sky-ink hover:underline disabled:opacity-40">
+            <button type="button" onClick={() => requestLink("magic")} disabled={!validEmail} className="min-h-11 px-2 text-sky-ink hover:underline disabled:opacity-40">
               Email me a sign-in link instead
             </button>
-            <button type="button" onClick={() => requestLink("reset")} disabled={!validEmail} className="text-sky-ink hover:underline disabled:opacity-40">
+            <button type="button" onClick={() => requestLink("reset")} disabled={!validEmail} className="min-h-11 px-2 text-sky-ink hover:underline disabled:opacity-40">
               Forgot password?
             </button>
           </div>
@@ -310,10 +310,10 @@ export default function AccountClient() {
             : "Free plan — chapter 1 of every course is open."}
         </p>
         <div className="mt-3 flex gap-3">
-          <Link href="/premium" className="font-bold text-sky-ink hover:underline">
+          <Link href="/premium" className="inline-flex min-h-11 items-center px-2 font-bold text-sky-ink hover:underline">
             See plans →
           </Link>
-          <Link href="/family" className="font-bold text-sky-ink hover:underline">
+          <Link href="/family" className="inline-flex min-h-11 items-center px-2 font-bold text-sky-ink hover:underline">
             Manage learners →
           </Link>
         </div>
