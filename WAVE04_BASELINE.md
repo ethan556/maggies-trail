@@ -48,3 +48,13 @@ Ranking uses learner harm × frequency × visibility × strategic importance on 
 ## Advanced-gap necessity audit
 
 Of the seven historical proposals, quotient mode has the clearest exact fit and reuse seam in this batch. Nested-rule decomposition, u-substitution two-world, error propagation, growth race, movable Rolle interval, and motion odometer remain evidence-supported candidates but require separate state/evaluator designs. They are not collapsed into decorative modes here.
+
+## S225 batch-2 baseline and necessity decisions
+
+- Local `HEAD` and `origin/main` now both identify the deployed S224 merge `ed3da510af24becda7589521b2e4f4c02942ccde`; the live alias returned HTTP 200 during this audit (`x-vercel-id` request marker `cle1::f7wnm-1786390426129-ab1e29cb7a11`). S225 remains an uncommitted current-source delta.
+- `in-05-01` and `ca-03-01` were both C-tier at score 24. Their step-3 acquisition surfaces were passive reveals, despite exact mathematical state being available.
+- Fresh proposal audit selected two exact-fit extensions: u-substitution as synchronized x/u worlds in `derivativeRuleLab`, and a movable equal-endpoint interval in `secantSlope`.
+- Motion odometer was formally refused as a new engine because `ia-04-01` is already A-tier (32) with exact signed/absolute accumulation through `accumulateArea`.
+- Error propagation and growth race remain prompt/model audits, not authorization for new engines. Nested-rule decomposition remains the clearest unresolved advanced engine candidate.
+
+After batch 2, HS tiers are **A 368 / B 205 / C 54 / D 0**. A/B coverage is **573/627 = 91.39%**, up from 91.07% after batch 1.

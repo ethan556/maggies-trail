@@ -110,7 +110,7 @@ describe("lesson playthrough (scripted DOM walk)", () => {
     fireEvent.click(radio(/3 apples and 4 more apples/));
     clickCheck();
     // diagnostic, not generic: names the add-instead-of-multiply error
-    expect(screen.getByText(/That's adding: 3 \+ 4 = 7/)).toBeTruthy();
+    expect(screen.getByTestId("feedback-scroll").textContent).toContain("That's adding: 3 + 4 = 7");
     expect(screen.queryByText(/^Incorrect/)).toBeNull();
     fireEvent.click(btn(/Try again/));
     fireEvent.click(radio(/3 bags with 4 apples in each bag/));
@@ -218,7 +218,7 @@ describe("mid-lesson resume", () => {
     render(<LessonPlayer lesson={lesson} />);
 
     // resumed at k1, not back at c1
-    expect(screen.getByText(/Picked up where you left off/)).toBeTruthy();
+    expect(screen.getByText(/Resumed at step 3 of 10/)).toBeTruthy();
     expect(screen.getByText(/step 3 of 10/)).toBeTruthy();
     expect(screen.queryByText(/Maya packs 3 bags/)).toBeNull(); // c1 not shown
     // session XP from i1 survived (10 XP chip in the header)

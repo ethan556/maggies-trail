@@ -49,26 +49,30 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Why the hypotheses are not decoration.",
+   "body": "Make the equal-endpoint guarantee move.",
    "widget": {
-    "type": "steppedReveal",
-    "prompt": "Break each condition in turn, and watch the theorem fail.",
-    "panels": [
-     {
-      "title": "Drop differentiability",
-      "body": "Take f(x) = |x| − 1 on [−1, 1]. The ends match (both 0), it is continuous — and f′ is NEVER zero. The corner ate the flat spot. Differentiability is not a technicality."
-     },
-     {
-      "title": "Drop continuity",
-      "body": "A function that jumps can start and end at the same height without ever turning round. Continuity is what forces it to come back the way it went."
-     },
-     {
-      "title": "Drop f(a) = f(b)",
-      "body": "Then there is nothing to prove — a curve that ends higher than it started need never be flat anywhere. It can climb the whole way."
-     }
+    "type": "secantSlope",
+    "prompt": "Move the right endpoint of f(x) = x² − 4x until it matches the left endpoint's height. Watch what the secant and the interior tangent must do.",
+    "curve": "square",
+    "mode": "rolle",
+    "a": 0,
+    "shiftX": 2,
+    "shiftY": -4,
+    "targetH": 4,
+    "startH": 1.5,
+    "successFeedback": "Now f(0) = f(4) = 0, so the secant is flat. The continuous, differentiable curve has a flat tangent at c = 2 strictly inside the interval.",
+    "lowFeedback": "B is still left of x = 4, so its height does not yet match f(0). Keep moving the right endpoint.",
+    "highFeedback": "B has passed x = 4, so its height is above f(0) again. Bring it back to the equal-height endpoint."
+   },
+   "predict": {
+    "prompt": "When endpoint B reaches the same height as A, what must happen to the secant through them?",
+    "options": [
+     { "id": "flat", "label": "Its slope becomes 0" },
+     { "id": "steep", "label": "Its slope becomes positive" },
+     { "id": "missing", "label": "Its slope becomes undefined" }
     ],
-    "continueFeedback": "Keep going — each hypothesis is load-bearing.",
-    "successFeedback": "Every condition earns its place: |x| − 1 kills the theorem with a single corner."
+    "outcomeId": "flat",
+    "reveal": "Equal endpoint heights give zero rise across a nonzero run, so the secant is flat. Rolle then guarantees a parallel flat tangent strictly inside."
    }
   },
   {

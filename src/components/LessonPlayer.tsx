@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { TLesson, TStep } from "@/lib/schema";
+import type { TLesson } from "@/lib/schema";
 import { canCheck, correctAnswerText, learnerAnswerText } from "@/lib/evaluate";
 import { computeStreak, localDateStr } from "@/lib/engine";
 import { useEnterAdvance } from "@/lib/keys";
@@ -23,7 +23,7 @@ import { classifyProcess, MULTI_CONTROL, processCue as processCue2, type Process
 import { responseCopy } from "@/lib/adaptivePolicy";
 import { classifyBaseTen, classifyFraction, classifyGraph, classifyNumberLine, classifyRatio, strategyCue, type Strategy } from "@/lib/strategyClassifiers";
 import { sameCMLValue, usePlayer } from "./playerStore";
-import { GoalRing, Narration, Rich, SparkBurst, SummitRoute, TrailAtmosphere, TrailClearingLabel, TrailDots, TrailWaypoint } from "./playerChrome";
+import { GoalRing, Narration, Rich, SparkBurst, SummitRoute, TrailAtmosphere, TrailDots } from "./playerChrome";
 import { MathProse } from "@/components/math/MathText";
 
 
@@ -503,11 +503,10 @@ export default function LessonPlayer({
       data-step-id={s.id}
       data-step-index={st.i}
       data-step-count={st.queue.length}
-      className="lesson-trail-shell relative flex min-h-dvh flex-col overflow-x-clip"
+      className="lesson-trail-shell lesson-trail-shell--active relative flex min-h-dvh flex-col overflow-x-clip"
     >
-      <TrailAtmosphere />
       <header className="trail-player-header sticky top-0 z-20 border-b border-ink/8 bg-paper/[0.88] backdrop-blur-xl dark:border-paper/8 dark:bg-night/[0.88]">
-        <div className={`mx-auto flex w-full ${widthCls} ${colTransition} items-center gap-3 px-3 py-2.5 sm:px-4`}>
+        <div className={`mx-auto flex w-full ${widthCls} ${colTransition} items-center gap-2.5 px-3 py-2 sm:px-4`}>
           <Link
             href="/"
             aria-label="Exit lesson"
@@ -515,16 +514,15 @@ export default function LessonPlayer({
           >
             <AppIcon name="arrowLeft" size={20} />
           </Link>
-          <div className="hidden min-w-0 shrink-0 items-center gap-2 lg:flex lg:max-w-[13rem]">
-            <Image src="/brand/logo-tally-peak.svg" alt="" width={30} height={30} unoptimized aria-hidden="true" />
-            <div className="min-w-0 leading-tight">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-tangerine-ink">Maggie&apos;s Trail</p>
-              <p className="truncate text-xs font-bold text-ink/[0.65] dark:text-paper/[0.65]">
-                {trailContext?.courseTitle ?? st.lesson.title}
-              </p>
-            </div>
-          </div>
           <div className="min-w-0 flex-1">
+            <div className="mb-1 flex min-w-0 items-baseline justify-between gap-2 px-0.5">
+              <h1 id="lesson-player-title" className="truncate text-sm font-extrabold leading-tight text-ink/[0.85] dark:text-paper/[0.85]">
+                {st.lesson.title}
+              </h1>
+              <span className="shrink-0 text-[10px] font-bold tabular-nums text-ink/[0.55] dark:text-paper/[0.55]">
+                {st.i + 1}/{st.queue.length}
+              </span>
+            </div>
             <TrailDots
               steps={st.queue}
               current={st.i}
@@ -536,10 +534,6 @@ export default function LessonPlayer({
                 )
               }
             />
-            <div className="mt-1 flex items-center justify-between gap-2 px-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-ink/[0.42] dark:text-paper/[0.42]">
-              <span className="truncate">{trailContext?.chapterTitle ?? "Current trail"}</span>
-              <span className="shrink-0 tabular-nums">{st.i + 1}/{st.queue.length}</span>
-            </div>
           </div>
           <span className="trail-xp-chip flex shrink-0 items-center gap-1 whitespace-nowrap rounded-pill border border-tangerine/25 bg-tangerine/10 px-2.5 py-1 text-xs font-extrabold tabular-nums text-[#9B4A18] shadow-e1 dark:text-tangerine-ink" aria-label={`${shownXp} experience points`}>
             <AppIcon name="spark" size={13} />
@@ -548,22 +542,27 @@ export default function LessonPlayer({
         </div>
       </header>
 
-      <main data-band={trailContext?.gradeBand ?? "middle"} key={`${s.id}:${st.i}`} className={`trail-step-enter relative z-[1] mx-auto w-full ${widthCls} ${colTransition} flex-1 px-4 pb-10 pt-3`}>
-        <TrailWaypoint kind={s.kind} current={st.i} total={st.queue.length} lessonTitle={st.lesson.title} />
+      <main
+        aria-labelledby="lesson-player-title"
+        data-band={trailContext?.gradeBand ?? "middle"}
+        data-step-kind={s.kind}
+        key={`${s.id}:${st.i}`}
+        className={`trail-step-enter relative z-[1] mx-auto w-full ${widthCls} ${colTransition} flex-1 px-4 pb-10 pt-4`}
+      >
         {/* Prose lives in the reading column even when the stage below widens. */}
         <div className="mx-auto w-full max-w-xl">
           {st.resumedAt !== null && (
             <div
               aria-live="polite"
-              className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-card border-2 border-sky/40 bg-sky/10 px-4 py-2 text-sm"
+              className="mb-3 flex items-center justify-between gap-2 rounded-card border border-sky/35 bg-sky/8 px-3 py-1.5 text-xs"
             >
-              <span className="font-bold">
-                Picked up where you left off — step {st.resumedAt + 1} of {st.queue.length}.
+              <span className="min-w-0 truncate font-bold">
+                Resumed at step {st.resumedAt + 1} of {st.queue.length}.
               </span>
               <button
                 type="button"
                 onClick={st.restart}
-                className="min-h-11 rounded-full px-3 font-bold text-sky-ink underline underline-offset-2"
+                className="min-h-11 shrink-0 rounded-full px-2.5 font-bold text-sky-ink underline underline-offset-2"
               >
                 Start over
               </button>
@@ -576,12 +575,9 @@ export default function LessonPlayer({
               their steppedReveal with no construction to look at. Only concept and
               interactive steps author `figure` anywhere in the corpus, so availability
               plus the FIGURE_IDS membership test is the whole guard.
-              The clearing label is suppressed when a widget follows, because the widget
-              block renders its own — otherwise a figure-bearing interactive step would
-              show the same decorative label twice. */}
+              Wave A gives the figure the visual lead with no repeated stage-kind label. */}
           {s.figure && FIGURE_IDS.has(s.figure) && (
-            <div className="trail-clearing-shell figure-reveal mb-4">
-              {!s.widget && <TrailClearingLabel kind={s.kind} />}
+            <div className="math-stage-shell figure-reveal mb-4">
               <div key={s.id} className="stage trail-concept-stage rounded-card p-3 shadow-e2 ring-1 ring-ink/8"><FigureView id={s.figure} /></div>
             </div>
           )}
@@ -622,7 +618,7 @@ export default function LessonPlayer({
               <AppIcon name="target" size={14} className="shrink-0" />
               <span>
                 Your prediction:{" "}
-                {s.predict.options.find((o) => o.id === st.prediction)?.label ?? ""}
+                <MathProse text={s.predict.options.find((o) => o.id === st.prediction)?.label ?? ""} />
                 <span className="ml-1 font-normal text-ink/70 dark:text-paper/70">
                   — now test it
                 </span>
@@ -633,8 +629,7 @@ export default function LessonPlayer({
 
         {/* The manipulative gets the step's full stage width — the loudest thing on screen. */}
         {!(s.predict && st.prediction === null) && s.widget && (
-          <div className="trail-clearing-shell mt-5">
-            <TrailClearingLabel kind={s.kind} />
+          <div className="math-stage-shell mt-4">
             <WidgetView
               spec={s.widget}
               value={st.value}
@@ -684,11 +679,11 @@ export default function LessonPlayer({
                     <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-pill bg-cta-good text-white" aria-hidden="true">
                       <AppIcon name="check" size={12} />
                     </span>
-                    <span>{t}</span>
+                    <span><MathProse text={t} includeArithmetic /></span>
                   </li>
                 ))}
               </ul>
-              {s.teaser && <p className="mt-2 italic text-ink/70">Next up: {s.teaser}</p>}
+              {s.teaser && <p className="mt-2 italic text-ink/70">Next up: <MathProse text={s.teaser} /></p>}
             </div>
           )}
 
@@ -708,7 +703,7 @@ export default function LessonPlayer({
                     <p className="text-[11px] font-extrabold uppercase tracking-wide text-tangerine-ink">
                       {HINT_RUNGS[i] ?? `Hint ${i + 1}`} · {i + 1} of {s.hints!.length}
                     </p>
-                    <p className={latest ? "mt-0.5 font-semibold" : "mt-0.5 text-sm"}>{h}</p>
+                    <p className={latest ? "mt-0.5 font-semibold" : "mt-0.5 text-sm"}><MathProse text={h} includeArithmetic /></p>
                   </div>
                 );
               })}
@@ -728,7 +723,7 @@ export default function LessonPlayer({
           <div data-testid="feedback-scroll" className="max-h-[42dvh] overflow-y-auto overscroll-contain">
             {st.phase === "retry" && (
               <StatusBanner tone="error" icon="target" title={COPY.nudgeBanner}>
-                <p><MathProse text={st.feedback} /></p>
+                <p><MathProse text={st.feedback} includeArithmetic /></p>
                 <p className="mt-1 text-xs font-semibold text-ink/70 dark:text-paper/70">
                   Your work is still on the stage — adjust it and check again.
                 </p>
@@ -745,13 +740,13 @@ export default function LessonPlayer({
                   <span className="rounded-pill bg-leaf/15 px-2 py-0.5 text-sm tabular-nums">+{st.lastXp} XP</span>
                 }
               >
-                {st.feedback && <p><MathProse text={st.feedback} /></p>}
+                {st.feedback && <p><MathProse text={st.feedback} includeArithmetic /></p>}
               </StatusBanner>
               </div>
             )}
             {st.phase === "revealed" && s.widget && (
               <StatusBanner tone="info" icon="route" title={COPY.revealBanner}>
-                <p><MathProse text={st.feedback} /></p>
+                <p><MathProse text={st.feedback} includeArithmetic /></p>
                 <div className="mt-2 flex flex-wrap items-stretch gap-2">
                   {revealYours !== null && revealYours !== revealAnswer && (
                     <p className="inline-flex flex-wrap items-baseline gap-x-2 rounded-lg bg-berry/10 px-2.5 py-1">
@@ -777,12 +772,12 @@ export default function LessonPlayer({
                   title={confirmed ? "Your prediction held. ✓" : "Not what you predicted — that's the interesting part."}
                 >
                   <p className="mt-1 text-sm">
-                    You predicted <strong>{chosen?.label ?? ""}</strong>
+                    You predicted <strong><MathProse text={chosen?.label ?? ""} /></strong>
                     {confirmed ? (
                       "."
                     ) : (
                       <>
-                        ; the model showed <strong>{outcome?.label ?? ""}</strong>.
+                        ; the model showed <strong><MathProse text={outcome?.label ?? ""} /></strong>.
                       </>
                     )}{" "}
                     <MathProse text={s.predict.reveal} />
@@ -792,7 +787,7 @@ export default function LessonPlayer({
             })()}
             {showExplanation && s.explanationVariants && (
               <div className="stage mb-3 rounded-card px-4 py-3 shadow-sm">
-                <p>{s.explanationVariants[st.variant]}</p>
+                <p><MathProse text={s.explanationVariants[st.variant]} includeArithmetic /></p>
                 <button
                   type="button"
                   onClick={st.swapVariant}
@@ -808,10 +803,6 @@ export default function LessonPlayer({
           </div>
 
           <div className="trail-action-row flex flex-wrap items-center justify-end gap-3">
-            <span className="mr-auto hidden items-center gap-1.5 text-xs font-bold text-ink/[0.7] dark:text-paper/[0.7] sm:inline-flex" aria-hidden="true">
-              <AppIcon name="route" size={14} />
-              {finalized ? "The next waypoint is ready" : actionable ? "Leave evidence on the trail" : "Keep following the route"}
-            </span>
             {/* Hint availability, not step kind, gates the control. The store's hint()
                 and the ladder renderer above were both kind-agnostic already, and
                 xpFor() prices "interactive" hints at the same −2 XP — but this button

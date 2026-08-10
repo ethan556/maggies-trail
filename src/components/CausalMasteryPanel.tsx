@@ -6,29 +6,7 @@ import { buildCMLMesh } from "@/lib/cml/mesh";
 import { humanizeCMLId, resolveCMLMeta } from "@/lib/cml/catalog";
 import type { ProcessEvent } from "@/lib/processEvents";
 import type { TStep } from "@/lib/schema";
-
-const STAGES = ["predict", "construct", "observe", "explain", "revise", "generalize", "retrieve"] as const;
-type CMLStage = (typeof STAGES)[number];
-
-const STAGE_LABEL: Record<CMLStage, string> = {
-  predict: "Predict",
-  construct: "Build",
-  observe: "Notice",
-  explain: "Explain",
-  revise: "Revise",
-  generalize: "Generalize",
-  retrieve: "Retrieve"
-};
-
-const STAGE_TONE: Record<CMLStage, string> = {
-  predict: "bg-tangerine/15 text-[#9B4A18] dark:text-tangerine-ink",
-  construct: "bg-sky/15 text-sky-ink",
-  observe: "bg-sky/15 text-sky-ink",
-  explain: "bg-violet-100 text-violet-700 dark:bg-violet-950/35 dark:text-violet-300",
-  revise: "bg-berry/12 text-berry-ink",
-  generalize: "bg-leaf/15 text-leaf-ink",
-  retrieve: "bg-leaf/15 text-leaf-ink"
-};
+import { MathProse } from "@/components/math/MathText";
 
 function sameValue(a: unknown, b: unknown): boolean {
   try {
@@ -89,22 +67,28 @@ export function CausalMasteryPanel({
   );
   const safeCard = cards[Math.min(activeCard, Math.max(0, cards.length - 1))] ?? null;
 
-  const activeStage: CMLStage = finalized
-    ? "retrieve"
-    : selected && !selected.correct
-      ? "revise"
-      : selected?.correct
-        ? "generalize"
-        : moveCount > 0
-          ? "observe"
-          : meta.stage;
-  const stageIndex = Math.max(0, STAGES.indexOf(activeStage));
-  const headline = meta.actionGoal ?? mesh?.narration ?? "Move the model and notice what changes.";
-  const previewCards = cards.slice(0, 3);
+  const isExponentChain = step.widget.type === "placeValueTransformLab" && step.widget.task === "exponentChain";
+  const exponentChainGoal =
+    isExponentChain
+      ? "Track how each exponent contribution changes the final exponent."
+      : null;
+  const actionGoal = exponentChainGoal ?? meta.actionGoal;
+  const summaryTitle = moveCount > 0 ? "Connect what changed" : "Need help connecting the model?";
+  const summaryText = exponentChainGoal
+    ? "See how the exponent stages combine."
+    : "See the model as a table, diagram, and equation.";
+  const representationNarration = isExponentChain
+    ? "Each repeated factor group contributes its exponent to the combined total."
+    : showFirst && firstMesh
+      ? firstMesh.narration
+      : mesh?.narration ?? "";
+  const invariants = isExponentChain
+    ? ["same-base-preserved", "exponent-counts-repeated-factors"]
+    : meta.invariants;
 
   return (
     <section
-      aria-label="Mastery lens"
+      aria-label="Model connections"
       className="cml-lens mx-auto mt-3 w-full max-w-3xl overflow-hidden rounded-card border border-sky/20 bg-surface shadow-e1"
     >
       <button
@@ -117,21 +101,8 @@ export function CausalMasteryPanel({
           <AppIcon name="compass" size={18} />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-extrabold">Mastery lens</span>
-            <span className={`rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide ${STAGE_TONE[activeStage]}`}>
-              {STAGE_LABEL[activeStage]}
-            </span>
-            {meta.flagship && (
-              <span className="rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-violet-700 dark:bg-violet-950/35 dark:text-violet-300">
-                deep dive
-              </span>
-            )}
-          </span>
-          <span className="mt-0.5 block truncate text-sm font-semibold text-content-2">{headline}</span>
-        </span>
-        <span className="hidden shrink-0 text-xs font-bold text-muted sm:block">
-          {moveCount} move{moveCount === 1 ? "" : "s"}
+          <span className="block text-sm font-extrabold">{summaryTitle}</span>
+          <span className="mt-0.5 block text-sm font-semibold leading-snug text-content-2"><MathProse text={summaryText} /></span>
         </span>
         <AppIcon
           name="chevronDown"
@@ -140,52 +111,12 @@ export function CausalMasteryPanel({
         />
       </button>
 
-      {!expanded && previewCards.length > 0 && (
-        <div className="flex gap-2 overflow-x-auto border-t border-ink/8 bg-surface-2/70 px-3 py-2 dark:border-paper/10 sm:px-4" aria-label="Live connected representations">
-          {previewCards.map((card) => (
-            <span
-              key={`${card.kind}:${card.label}`}
-              className="whitespace-nowrap rounded-full border border-ink/10 bg-white px-2.5 py-1 text-xs font-bold text-ink/70 dark:border-paper/10 dark:bg-night/60 dark:text-paper/70"
-            >
-              <span className="text-sky-ink">{humanizeCMLId(card.kind)}:</span> {card.value}
-            </span>
-          ))}
-          <span className="ml-auto whitespace-nowrap px-1 py-1 text-xs font-bold text-muted">Tap to open</span>
-        </div>
-      )}
-
       {expanded && (
         <div className="grid gap-4 border-t border-ink/8 p-3 dark:border-paper/10 sm:p-4">
-          <div className="flex gap-1 overflow-x-auto pb-1" aria-label="Mastery cycle">
-            {STAGES.map((stage, i) => (
-              <span
-                key={stage}
-                aria-current={stage === activeStage ? "step" : undefined}
-                className={`whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-extrabold ${
-                  stage === activeStage
-                    ? STAGE_TONE[stage]
-                    : i < stageIndex
-                      ? "bg-leaf/10 text-leaf-ink"
-                      : "bg-ink/5 text-ink/70 dark:bg-paper/10 dark:text-paper/70"
-                }`}
-              >
-                {STAGE_LABEL[stage]}
-              </span>
-            ))}
-          </div>
-
-          <div className="math-color-key" aria-label="Mathematical color key">
-            <span><i className="bg-sky" />your move</span>
-            <span><i className="bg-tangerine" />target or prediction</span>
-            <span><i className="bg-leaf" />invariant or confirmed</span>
-            <span><i className="bg-berry" />repair</span>
-            <span><i className="bg-violet-500" />transfer</span>
-          </div>
-
-          {meta.actionGoal && (
+          {actionGoal && (
             <div className="rounded-card border-l-4 border-tangerine bg-tangerine/7 px-3 py-2">
               <p className="text-[10px] font-extrabold uppercase tracking-wide text-tangerine-ink">Do the mathematics</p>
-              <p className="mt-0.5 text-sm font-semibold">{meta.actionGoal}</p>
+              <p className="mt-0.5 text-sm font-semibold"><MathProse text={actionGoal} /></p>
             </div>
           )}
 
@@ -194,7 +125,7 @@ export function CausalMasteryPanel({
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
                   <p className="text-[10px] font-extrabold uppercase tracking-wide text-muted">Connected representations</p>
-                  <p className="mt-0.5 text-sm text-content-2">{showFirst && firstMesh ? firstMesh.narration : mesh?.narration}</p>
+                  <p className="mt-0.5 text-sm text-content-2"><MathProse text={representationNarration} /></p>
                 </div>
                 {revised && firstMesh && (
                   <button
@@ -215,7 +146,7 @@ export function CausalMasteryPanel({
                     role="tab"
                     aria-selected={i === activeCard}
                     onClick={() => setActiveCard(i)}
-                    className={`min-h-9 whitespace-nowrap rounded-full border px-3 text-xs font-extrabold ${
+                    className={`min-h-11 whitespace-nowrap rounded-full border px-3 text-xs font-extrabold ${
                       i === activeCard ? "border-sky bg-sky/10 text-sky-ink" : "border-ink/10 text-content-2 dark:border-paper/10"
                     }`}
                   >
@@ -225,17 +156,17 @@ export function CausalMasteryPanel({
               </div>
               <div role="tabpanel" className="mt-2 rounded-card border border-ink/10 bg-white p-4 dark:border-paper/10 dark:bg-night/60">
                 <p className="text-[10px] font-extrabold uppercase tracking-wide text-sky-ink">{safeCard.label}</p>
-                <p className="mt-1 break-words text-xl font-extrabold tabular-nums">{safeCard.value}</p>
-                {safeCard.detail && <p className="mt-1 text-sm font-semibold text-content-2">{safeCard.detail}</p>}
+                <p className="mt-1 break-words text-xl font-extrabold tabular-nums"><MathProse text={safeCard.value} /></p>
+                {safeCard.detail && <p className="mt-1 text-sm font-semibold text-content-2"><MathProse text={safeCard.detail} /></p>}
               </div>
             </div>
           )}
 
-          {meta.invariants.length > 0 && (
+          {invariants.length > 0 && (
             <div className="rounded-card border border-leaf/20 bg-leaf/6 px-3 py-2">
               <p className="text-[10px] font-extrabold uppercase tracking-wide text-leaf-ink">What must stay true</p>
               <p className="mt-1 text-sm font-semibold">
-                {meta.invariants.map(humanizeCMLId).join(" · ")}
+                {invariants.map(humanizeCMLId).join(" · ")}
               </p>
             </div>
           )}
@@ -277,7 +208,7 @@ export function CausalMasteryPanel({
           {explanation && (
             <div className="rounded-card border border-violet-200/70 bg-violet-50/50 p-3 dark:border-violet-900/50 dark:bg-violet-950/20">
               <p className="text-[10px] font-extrabold uppercase tracking-wide text-violet-700 dark:text-violet-300">Explain why</p>
-              <p className="mt-1 font-bold">{explanation.prompt}</p>
+              <p className="mt-1 font-bold"><MathProse text={explanation.prompt} /></p>
               <div className="mt-2 grid gap-2 sm:grid-cols-2" role="radiogroup" aria-label={explanation.prompt}>
                 {explanation.options.map((option) => (
                   <button
@@ -290,7 +221,7 @@ export function CausalMasteryPanel({
                       explanationId === option.id ? "border-violet-500 bg-violet-100/70 dark:bg-violet-950/40" : "border-ink/10 bg-white dark:border-paper/10 dark:bg-night/50"
                     }`}
                   >
-                    {option.label}
+                    <MathProse text={option.label} />
                   </button>
                 ))}
               </div>
@@ -299,7 +230,7 @@ export function CausalMasteryPanel({
                   aria-live="polite"
                   className={`mt-2 rounded-card px-3 py-2 text-sm font-semibold ${selected.correct ? "bg-leaf/10 text-leaf-ink" : "bg-berry/8 text-berry-ink"}`}
                 >
-                  {selected.feedback}
+                  <MathProse text={selected.feedback} />
                 </p>
               )}
             </div>
@@ -308,7 +239,7 @@ export function CausalMasteryPanel({
           {meta.counterfactualPrompt && (
             <div className="rounded-card border-l-4 border-violet-500 bg-violet-50/70 px-3 py-2 dark:bg-violet-950/20">
               <p className="text-[10px] font-extrabold uppercase tracking-wide text-violet-700 dark:text-violet-300">Try a what-if</p>
-              <p className="mt-0.5 text-sm font-semibold">{meta.counterfactualPrompt}</p>
+              <p className="mt-0.5 text-sm font-semibold"><MathProse text={meta.counterfactualPrompt} /></p>
             </div>
           )}
 

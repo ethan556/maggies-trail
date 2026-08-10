@@ -461,11 +461,15 @@ input[type="range"][class*="accent-"]:disabled::-moz-range-thumb { opacity: 0.55
 }
 
 .dark .lesson-stage {
+  /* The mathematical stage stays paper-light inside dark chrome. Every widget,
+     SVG palette, ink utility, and KaTeX surface is authored against that
+     contract; a dark stage leaves fixed `text-ink` content below AA contrast. */
   background:
-    radial-gradient(circle at 18% 0%, rgb(78 154 255 / 0.08), transparent 32%),
-    radial-gradient(circle at 88% 100%, rgb(78 207 139 / 0.07), transparent 34%),
-    linear-gradient(180deg, rgb(19 29 48) 0%, rgb(14 22 37) 100%);
-  border-color: rgb(255 255 255 / 0.10);
+    radial-gradient(circle at 18% 0%, rgb(46 124 214 / 0.055), transparent 32%),
+    radial-gradient(circle at 88% 100%, rgb(47 163 107 / 0.05), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  color: theme(colors.ink);
+  border-color: rgb(34 49 79 / 0.12);
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.16), 0 12px 32px rgb(0 0 0 / 0.18);
 }
 
@@ -597,6 +601,12 @@ input[type="range"][class*="accent-"]:disabled::-moz-range-thumb { opacity: 0.55
       rgb(90 160 236 / 0.05) 27px 28px,
       transparent 29px 46px
     );
+}
+
+/* Active lesson work is mathematics-first. Keep the branded terrain for the
+   summit screen, but remove the contour texture while a learner is reasoning. */
+.lesson-trail-shell--active::before {
+  display: none;
 }
 
 .trail-atmosphere {
@@ -771,9 +781,8 @@ input[type="range"][class*="accent-"]:disabled::-moz-range-thumb { opacity: 0.55
   box-shadow: 0 0 0 5px rgb(var(--surface) / 0.8), var(--shadow-e1);
 }
 
-.trail-clearing-shell {
+.math-stage-shell {
   position: relative;
-  padding-top: 0.72rem;
 }
 
 .trail-clearing-label {
@@ -811,7 +820,7 @@ input[type="range"][class*="accent-"]:disabled::-moz-range-thumb { opacity: 0.55
 }
 
 .trail-concept-stage,
-.trail-clearing-shell > .lesson-stage {
+.math-stage-shell > .lesson-stage {
   overflow: hidden;
 }
 

@@ -26,3 +26,25 @@
 - Physical screen-reader, 200% zoom, and real-device testing remain CL-P1-035.
 - Six advanced interaction proposals remain open for fresh per-gap state/evaluator design.
 - Full generated-artifact replay beyond S146 remains a verifier-portability task; `verify:corpus-state` is the authoritative fresh current-corpus proof for this batch.
+
+## S225 batch-2 falsification pass
+
+- **Passive-model regression:** production baselines at 390x844 confirmed both target steps were passive. Current source now exposes stateful models in the same lesson positions.
+- **Substitution drift:** factor and power controls were driven to 2 and 3. The accessible model name, visible readouts, table, symbolic view, and evaluator all agree on `u^3 du`, coefficient 1, antiderivative `(1/4)u^4+C`, and no remaining `x`.
+- **TeX escape defect:** the first browser build visibly printed `qquad`. The TeX literal was corrected, rebuilt, and rechecked. Final DOM contains four MathML trees and no visible `qquad` artifact.
+- **Rolle mismatch:** the interval was moved from B=1.5 to B=4 using keyboard arrows. Final state reports `f(A)=0`, `f(B)=0`, secant slope 0, and tangent slope 0 at c=2 in both the visual and accessible graph description.
+- **Keyboard failure:** an initial browser pass showed native range focus without reliable value movement. Explicit ArrowLeft/Right/Up/Down/Home/End handling was added to the new controls. The browser then reached exact targets, and the focused plus global keyboard suites pass 149/149.
+- **Touch/target size:** both new ranges are 331x44 CSS px at the 390px viewport. The shared accessible-state disclosure was found at only 16px high and repaired to 44px; final measurement is 305x44. Physical-device touch remains CL-P1-035.
+- **Overflow:** final 390px audit reports zero horizontal overflow on the u-sub surface; Rolle screenshot also shows no clipped model or controls.
+- **Reduced motion:** the Rolle secant/tangent transition defaults to `transition:none` and is enabled only inside `prefers-reduced-motion: no-preference`. The audit machine reported normal motion; reduced behavior is code- and build-verified, not claimed as physical-OS emulation.
+- **Accessibility:** controls have exact labels, live mathematical state has role-image descriptions, KaTeX emits MathML, and no browser console errors were present in the final current-source pass.
+- **Security:** production dependency audit reports 0 vulnerabilities.
+- **Corpus identity:** regenerated manifest, notebook index, prerequisites, and product states agree on SHA-256 `6bd7524b947d1daf9d84d920c895d8366ad7e1b160cd19ccc14b9a8f8682ecc8`.
+- **Strict CML baseline:** strict lint still reports the two pre-existing `re-04-02` radical-functions errors and 340 warnings. Neither target lesson adds an error; both new acquisition predictions are causal and directly attached to manipulatives.
+
+### Batch-2 screenshots
+
+- `WAVE04_SCREENSHOTS_BATCH02/01-live-usub-passive.png`
+- `WAVE04_SCREENSHOTS_BATCH02/02-live-rolle-passive.png`
+- `WAVE04_SCREENSHOTS_BATCH02/03-fixed-usub-mobile.png`
+- `WAVE04_SCREENSHOTS_BATCH02/04-fixed-rolle-mobile.png`

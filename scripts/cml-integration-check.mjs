@@ -50,7 +50,7 @@ const player = fs.readFileSync(path.join(root, 'src', 'components', 'LessonPlaye
 for (const token of ['CausalMasteryPanel', 'setCMLValue', 'cmlHistory', 'onRestoreFirst', 'resolveCMLMeta'])
   if (!player.includes(token)) fail(`Lesson player is missing ${token}`);
 const panel = fs.readFileSync(path.join(root, 'src', 'components', 'CausalMasteryPanel.tsx'), 'utf8');
-for (const token of ['activeStage', 'Mastery lens', 'Compare first build', 'Undo last move', 'Try a what-if', 'Explain why', 'after a delay'])
+for (const token of ['summaryText', 'Need help connecting the model?', 'Compare first build', 'Undo last move', 'Try a what-if', 'Explain why', 'after a delay'])
   if (!panel.includes(token)) fail(`Causal mastery panel is missing ${token}`);
 const widgets = fs.readFileSync(path.join(root, 'src', 'components', 'widgets.tsx'), 'utf8');
 for (const token of ['Add a zero pair', 'Repartition ×2', 'Rotate rectangle — preserve area', 'Rotate the base — preserve volume', 'Nearby input output table'])

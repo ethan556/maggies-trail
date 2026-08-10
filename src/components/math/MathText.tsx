@@ -47,27 +47,27 @@ function useMath(tex: string, display: boolean): RenderedMath | null {
  * of the raw tex would OVERRIDE that MathML and read "\\frac{1}{2}" aloud — strictly worse.
  * The pre-load fallback shows the tex source to everyone for the moment before the
  * renderer arrives; the swap replaces it with self-describing KaTeX markup. */
-export function MathInline({ tex }: { tex: string }) {
+export function MathInline({ tex, fallback = tex }: { tex: string; fallback?: string }) {
   const out = useMath(tex, false);
-  if (!out) return <span className="math-inline">{tex}</span>;
+  if (!out) return <span className="math-inline">{fallback}</span>;
   return <span className="math-inline" dangerouslySetInnerHTML={{ __html: out.html }} />;
 }
 
 /** Mixed prose + authored power shorthand. Only the power tokens are sent to
  * KaTeX; surrounding words and punctuation retain normal wrapping and speech. */
-export function MathProse({ text }: { text: string }) {
-  return <>{authoredMathParts(text).map((part, index) => (
+export function MathProse({ text, includeArithmetic = false }: { text: string; includeArithmetic?: boolean }) {
+  return <>{authoredMathParts(text, { includeArithmetic }).map((part, index) => (
     part.tex
-      ? <span key={index}><MathInline tex={part.tex} />{part.text}</span>
-      : <span key={index}>{part.text}</span>
+      ? <span key={index}><MathInline tex={part.tex} fallback={part.source} />{part.text}</span>
+      : part.text
   ))}</>;
 }
 
 export function MathDisplay({ tex }: { tex: string }) {
   const out = useMath(tex, true);
   return (
-    <div className="math-display" style={{ minHeight: "2.6em" }}>
-      {out ? <span dangerouslySetInnerHTML={{ __html: out.html }} /> : <span>{tex}</span>}
+    <div className="math-display" style={{ minHeight: "2.6em" }} aria-busy={!out || undefined}>
+      {out ? <span dangerouslySetInnerHTML={{ __html: out.html }} /> : <span aria-hidden="true">&nbsp;</span>}
     </div>
   );
 }

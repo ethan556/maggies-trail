@@ -127,14 +127,14 @@ describe("hint reachability on interactive steps", () => {
     expect(screen.queryByText(HINTS[0])).toBeNull();
 
     fireEvent.click(hintButton()!);
-    expect(screen.getByText(HINTS[0])).toBeTruthy();
+    expect(screen.getByLabelText("Hints").textContent).toContain(HINTS[0]);
     expect(screen.queryByText(HINTS[1])).toBeNull(); // progressive, never all at once
 
     fireEvent.click(hintButton()!);
-    expect(screen.getByText(HINTS[1])).toBeTruthy();
+    expect(screen.getByLabelText("Hints").textContent).toContain(HINTS[1]);
 
     fireEvent.click(hintButton()!);
-    expect(screen.getByText(HINTS[2])).toBeTruthy();
+    expect(screen.getByLabelText("Hints").textContent).toContain(HINTS[2]);
     expect(usePlayer.getState().hintsShown).toBe(HINTS.length);
 
     // Ladder exhausted -> the control retires rather than dead-clicking.
@@ -266,20 +266,18 @@ describe("figure reachability on interactive steps", () => {
     expect(figureNode()).not.toBeNull();
   });
 
-  it("does not show the decorative clearing label twice when a widget follows the figure", () => {
+  it("does not place decorative stage-kind labels ahead of the widget", () => {
     render(<LessonPlayer lesson={figureLesson} />);
     advance(); // -> interactive, which has BOTH a figure and a widget
 
-    // The widget block owns the label on this step; the figure block must stay quiet.
-    expect(clearingLabels().length).toBe(1);
+    expect(clearingLabels().length).toBe(0);
   });
 
-  it("keeps the concept-step figure and its label exactly as before", () => {
+  it("keeps the concept-step figure without adding shell copy above it", () => {
     render(<LessonPlayer lesson={figureLesson} />);
     expect(usePlayer.getState().queue[usePlayer.getState().i].kind).toBe("concept");
     expect(figureNode()).not.toBeNull();
-    // No widget on a concept step, so the figure block still carries the label.
-    expect(clearingLabels().length).toBe(1);
+    expect(clearingLabels().length).toBe(0);
   });
 
   it("renders no figure block on a step that authors none", () => {

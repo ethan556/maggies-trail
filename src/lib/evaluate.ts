@@ -141,16 +141,18 @@ export function expLogReadout(mode: "exponential" | "logarithm", base: number, x
 
 /** The curve a secantSlope draws, its exact derivative, and the secant slope over a gap h.
  * Exported so the component and the grader share one arithmetic. */
-export function curveAt(curve: "square" | "cubic", x: number): number {
-  return curve === "square" ? x * x : x * x * x;
+export function curveAt(curve: "square" | "cubic", x: number, shiftX = 0, shiftY = 0): number {
+  const z = x - shiftX;
+  return (curve === "square" ? z * z : z * z * z) + shiftY;
 }
-export function curveSlopeAt(curve: "square" | "cubic", x: number): number {
-  return curve === "square" ? 2 * x : 3 * x * x;
+export function curveSlopeAt(curve: "square" | "cubic", x: number, shiftX = 0): number {
+  const z = x - shiftX;
+  return curve === "square" ? 2 * z : 3 * z * z;
 }
 /** Null at h = 0: the difference quotient is 0/0 there, and that is the point. */
-export function secantSlopeOver(curve: "square" | "cubic", a: number, h: number): number | null {
+export function secantSlopeOver(curve: "square" | "cubic", a: number, h: number, shiftX = 0, shiftY = 0): number | null {
   if (h === 0) return null;
-  return (curveAt(curve, a + h) - curveAt(curve, a)) / h;
+  return (curveAt(curve, a + h, shiftX, shiftY) - curveAt(curve, a, shiftX, shiftY)) / h;
 }
 
 /** (a + bi)(c + di). Exported so the widget's second arrow and the grader use ONE multiplication. */
@@ -1155,7 +1157,7 @@ export function evaluate(spec: TWidget, value: unknown): EvalResult {
     case "secantSlope": {
       const hv = value as number | null | undefined;
       if (typeof hv !== "number") return { correct: false, feedback: "Slide the second point, then check." };
-      if (spec.mode === "average") {
+      if (spec.mode === "average" || spec.mode === "rolle") {
         if (Math.abs(hv - spec.targetH) < 1e-9) return { correct: true, feedback: spec.successFeedback };
         return hv < spec.targetH
           ? { correct: false, feedback: spec.lowFeedback }
@@ -2846,7 +2848,9 @@ export function correctAnswerText(spec: TWidget): string {
     case "secantSlope":
       return spec.mode === "average"
         ? `a gap of ${spec.targetH}`
-        : `squeeze the gap to ${spec.targetH} or less (slope → ${curveSlopeAt(spec.curve, spec.a)})`;
+        : spec.mode === "rolle"
+        ? `matching endpoint heights across a gap of ${spec.targetH}, with a flat tangent between them`
+        : `squeeze the gap to ${spec.targetH} or less (slope → ${curveSlopeAt(spec.curve, spec.a, spec.shiftX)})`;
     case "graphZoom":
       return spec.targetVerdict === "limit-exists"
         ? `the limit exists (it is ${spec.leftValue})`

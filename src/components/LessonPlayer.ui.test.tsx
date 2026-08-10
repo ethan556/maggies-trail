@@ -184,7 +184,9 @@ describe("hint ladder", () => {
     expect(screen.getByText(/Strategy · 2 of 3/)).toBeTruthy();
     fireEvent.click(btn(/Hint/));
     expect(screen.getByText(/Worked step · 3 of 3/)).toBeTruthy();
-    expect(screen.getByText(/2x = 8, so divide both sides by 2\./)).toBeTruthy();
+    const workedStep = screen.getByText(/Worked step · 3 of 3/).closest("div");
+    expect(workedStep?.textContent).toContain("so divide both sides by 2.");
+    expect(workedStep?.querySelector(".math-inline")).toBeTruthy();
   });
 });
 
@@ -247,8 +249,8 @@ describe("completion consolidation", () => {
   });
 });
 
-describe("persistent trail identity", () => {
-  it("locates the learner in course, chapter, waypoint, clearing, and summit chrome", () => {
+describe("math-first active shell", () => {
+  it("keeps one compact lesson heading and removes repeated waypoint and clearing chrome", () => {
     render(
       <LessonPlayer
         lesson={tierLesson}
@@ -263,16 +265,17 @@ describe("persistent trail identity", () => {
       />
     );
 
-    expect(document.querySelector(".lesson-trail-shell")).toBeTruthy();
-    expect(document.querySelector(".trail-atmosphere")).toBeTruthy();
-    expect(screen.getByText("Maggie's Trail")).toBeTruthy();
-    expect(screen.getByText("Linear Relationships")).toBeTruthy();
-    expect(screen.getByText("Lines as trails")).toBeTruthy();
-    expect(screen.getByRole("region", { name: /Discover: waypoint 1 of 8/i })).toBeTruthy();
+    expect(document.querySelector(".lesson-trail-shell--active")).toBeTruthy();
+    expect(document.querySelector(".trail-atmosphere")).toBeNull();
+    expect(screen.getByRole("heading", { level: 1, name: "Tier Test Trail" })).toBeTruthy();
+    expect(screen.getByRole("img", { name: "Step 1 of 8" })).toBeTruthy();
+    expect(document.querySelector(".trail-waypoint")).toBeNull();
+    expect(document.querySelector(".trail-clearing-label")).toBeNull();
 
     fireEvent.click(btn(/^Continue$/));
-    expect(screen.getByRole("region", { name: /Explore: waypoint 2 of 8/i })).toBeTruthy();
-    expect(screen.getByText("Trail clearing")).toBeTruthy();
+    expect((mainEl().dataset.stepKind)).toBe("interactive");
+    expect(screen.getByRole("img", { name: "Step 2 of 8" })).toBeTruthy();
+    expect(document.querySelector(".trail-clearing-label")).toBeNull();
     expect(document.querySelector(".trail-action-dock")).toBeTruthy();
   });
 });
