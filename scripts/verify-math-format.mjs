@@ -61,6 +61,10 @@ if (!/\.math-display[\s\S]{0,400}color: inherit|color: inherit[\s\S]{0,400}\.mat
 if (!/\.math-display\s*\{[^}]*overflow-x:\s*auto/.test(css)) {
   fail.push("M4: .math-display lost overflow-x:auto — long math would scroll the page on mobile");
 }
+const darkStage = css.match(/\.dark \.lesson-stage\s*\{([^}]*)\}/)?.[1] ?? "";
+if (!darkStage.includes("#ffffff") || !darkStage.includes("color: theme(colors.ink)")) {
+  fail.push("M4: the dark-theme lesson stage is no longer the required ink-on-light mathematical canvas");
+}
 
 if (fail.length) {
   console.error(`verify:math-format FAILED:\n${fail.map((f) => `- ${f}`).join("\n")}`);

@@ -5,7 +5,7 @@ const css=fs.readFileSync('src/app/globals.css','utf8');
 const mesh=fs.readFileSync('src/lib/cml/mesh.ts','utf8');
 const catalog=fs.readFileSync('src/lib/cml/catalog.ts','utf8');
 for(const t of ['Discover','Explore','Practice','Challenge','Reflect','lesson-intent-bar','backdrop-blur-xl'])assert(player.includes(t),`player missing ${t}`);
-for(const t of ['Mastery lens','aria-expanded={expanded}','Tap to open','math-color-key','Undo last move','Try a what-if'])assert(panel.includes(t),`panel missing ${t}`);
+for(const t of ['Need help connecting the model?','aria-expanded={expanded}','summaryText','Connected representations','Undo last move','Try a what-if'])assert(panel.includes(t),`panel missing ${t}`);
 for(const t of ['.lesson-stage','.cml-lens','.math-color-key','.lesson-intent-bar'])assert(css.includes(t),`CSS missing ${t}`);
 const profiles=new Set([...catalog.matchAll(/^  ([A-Za-z0-9]+): \{/gm)].map(m=>m[1]));
 const cases=new Set([...mesh.matchAll(/case "([A-Za-z0-9]+)":/g)].map(m=>m[1]));

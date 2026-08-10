@@ -618,7 +618,7 @@ export default function LessonPlayer({
               <AppIcon name="target" size={14} className="shrink-0" />
               <span>
                 Your prediction:{" "}
-                {s.predict.options.find((o) => o.id === st.prediction)?.label ?? ""}
+                <MathProse text={s.predict.options.find((o) => o.id === st.prediction)?.label ?? ""} />
                 <span className="ml-1 font-normal text-ink/70 dark:text-paper/70">
                   — now test it
                 </span>
@@ -679,11 +679,11 @@ export default function LessonPlayer({
                     <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-pill bg-cta-good text-white" aria-hidden="true">
                       <AppIcon name="check" size={12} />
                     </span>
-                    <span>{t}</span>
+                    <span><MathProse text={t} includeArithmetic /></span>
                   </li>
                 ))}
               </ul>
-              {s.teaser && <p className="mt-2 italic text-ink/70">Next up: {s.teaser}</p>}
+              {s.teaser && <p className="mt-2 italic text-ink/70">Next up: <MathProse text={s.teaser} /></p>}
             </div>
           )}
 
@@ -703,7 +703,7 @@ export default function LessonPlayer({
                     <p className="text-[11px] font-extrabold uppercase tracking-wide text-tangerine-ink">
                       {HINT_RUNGS[i] ?? `Hint ${i + 1}`} · {i + 1} of {s.hints!.length}
                     </p>
-                    <p className={latest ? "mt-0.5 font-semibold" : "mt-0.5 text-sm"}>{h}</p>
+                    <p className={latest ? "mt-0.5 font-semibold" : "mt-0.5 text-sm"}><MathProse text={h} includeArithmetic /></p>
                   </div>
                 );
               })}
@@ -723,7 +723,7 @@ export default function LessonPlayer({
           <div data-testid="feedback-scroll" className="max-h-[42dvh] overflow-y-auto overscroll-contain">
             {st.phase === "retry" && (
               <StatusBanner tone="error" icon="target" title={COPY.nudgeBanner}>
-                <p><MathProse text={st.feedback} /></p>
+                <p><MathProse text={st.feedback} includeArithmetic /></p>
                 <p className="mt-1 text-xs font-semibold text-ink/70 dark:text-paper/70">
                   Your work is still on the stage — adjust it and check again.
                 </p>
@@ -740,13 +740,13 @@ export default function LessonPlayer({
                   <span className="rounded-pill bg-leaf/15 px-2 py-0.5 text-sm tabular-nums">+{st.lastXp} XP</span>
                 }
               >
-                {st.feedback && <p><MathProse text={st.feedback} /></p>}
+                {st.feedback && <p><MathProse text={st.feedback} includeArithmetic /></p>}
               </StatusBanner>
               </div>
             )}
             {st.phase === "revealed" && s.widget && (
               <StatusBanner tone="info" icon="route" title={COPY.revealBanner}>
-                <p><MathProse text={st.feedback} /></p>
+                <p><MathProse text={st.feedback} includeArithmetic /></p>
                 <div className="mt-2 flex flex-wrap items-stretch gap-2">
                   {revealYours !== null && revealYours !== revealAnswer && (
                     <p className="inline-flex flex-wrap items-baseline gap-x-2 rounded-lg bg-berry/10 px-2.5 py-1">
@@ -772,12 +772,12 @@ export default function LessonPlayer({
                   title={confirmed ? "Your prediction held. ✓" : "Not what you predicted — that's the interesting part."}
                 >
                   <p className="mt-1 text-sm">
-                    You predicted <strong>{chosen?.label ?? ""}</strong>
+                    You predicted <strong><MathProse text={chosen?.label ?? ""} /></strong>
                     {confirmed ? (
                       "."
                     ) : (
                       <>
-                        ; the model showed <strong>{outcome?.label ?? ""}</strong>.
+                        ; the model showed <strong><MathProse text={outcome?.label ?? ""} /></strong>.
                       </>
                     )}{" "}
                     <MathProse text={s.predict.reveal} />
@@ -787,7 +787,7 @@ export default function LessonPlayer({
             })()}
             {showExplanation && s.explanationVariants && (
               <div className="stage mb-3 rounded-card px-4 py-3 shadow-sm">
-                <p>{s.explanationVariants[st.variant]}</p>
+                <p><MathProse text={s.explanationVariants[st.variant]} includeArithmetic /></p>
                 <button
                   type="button"
                   onClick={st.swapVariant}

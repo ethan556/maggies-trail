@@ -127,14 +127,14 @@ describe("hint reachability on interactive steps", () => {
     expect(screen.queryByText(HINTS[0])).toBeNull();
 
     fireEvent.click(hintButton()!);
-    expect(screen.getByText(HINTS[0])).toBeTruthy();
+    expect(screen.getByLabelText("Hints").textContent).toContain(HINTS[0]);
     expect(screen.queryByText(HINTS[1])).toBeNull(); // progressive, never all at once
 
     fireEvent.click(hintButton()!);
-    expect(screen.getByText(HINTS[1])).toBeTruthy();
+    expect(screen.getByLabelText("Hints").textContent).toContain(HINTS[1]);
 
     fireEvent.click(hintButton()!);
-    expect(screen.getByText(HINTS[2])).toBeTruthy();
+    expect(screen.getByLabelText("Hints").textContent).toContain(HINTS[2]);
     expect(usePlayer.getState().hintsShown).toBe(HINTS.length);
 
     // Ladder exhausted -> the control retires rather than dead-clicking.

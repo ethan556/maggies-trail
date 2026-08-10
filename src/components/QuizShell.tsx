@@ -7,6 +7,7 @@ import { useEnterAdvance } from "@/lib/keys";
 import type { TWidget } from "@/lib/schema";
 import WidgetView from "@/components/WidgetView";
 import { HINT_RUNGS, StatusBanner, StepSegments } from "./ui";
+import { MathProse } from "@/components/math/MathText";
 
 /** A standalone servable check — the unit of Review and Practice queues. */
 export interface Servable {
@@ -116,7 +117,7 @@ export default function QuizShell({
         )}
       </div>
 
-      {item.body && <p className="mt-2 font-bold">{item.body}</p>}
+      {item.body && <p className="mt-2 font-bold"><MathProse text={item.body} includeArithmetic /></p>}
 
       <div className="mt-4">
         <WidgetView
@@ -147,7 +148,7 @@ export default function QuizShell({
                     <span className="font-extrabold text-tangerine-ink">
                       {HINT_RUNGS[hi] ?? `Hint ${hi + 1}`} · {hi + 1} of {item.hints!.length}:{" "}
                     </span>
-                    {h}
+                    <MathProse text={h} includeArithmetic />
                   </li>
                 );
               })}
@@ -168,7 +169,7 @@ export default function QuizShell({
       {phase === "retry" && (
         <div className="banner-in mt-4">
           <StatusBanner tone="error" icon="target" title={COPY.nudgeBanner}>
-            <p className="text-sm">{feedback}</p>
+            <p className="text-sm"><MathProse text={feedback} includeArithmetic /></p>
           </StatusBanner>
         </div>
       )}
@@ -183,13 +184,13 @@ export default function QuizShell({
             {revealed && (
               <p className="mt-1 inline-flex flex-wrap items-baseline gap-x-2 rounded-lg bg-sky/10 px-2.5 py-1 text-sm">
                 <strong className="text-sky-ink">{COPY.answerWas}</strong>
-                <span className="font-bold">{correctAnswerText(item.widget)}</span>
+                <span className="font-bold"><MathProse text={correctAnswerText(item.widget)} includeArithmetic /></span>
               </p>
             )}
-            {!revealed && feedback && <p className="mt-1 text-sm">{feedback}</p>}
+            {!revealed && feedback && <p className="mt-1 text-sm"><MathProse text={feedback} includeArithmetic /></p>}
             {showExplanation && (
               <div className="mt-2 border-t-2 border-ink/10 pt-2 dark:border-paper/10">
-                <p className="text-sm">{variants[variantIdx % variants.length]}</p>
+                <p className="text-sm"><MathProse text={variants[variantIdx % variants.length]} includeArithmetic /></p>
                 {variants.length > 1 && (
                   <button
                     type="button"

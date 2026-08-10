@@ -184,7 +184,9 @@ describe("hint ladder", () => {
     expect(screen.getByText(/Strategy · 2 of 3/)).toBeTruthy();
     fireEvent.click(btn(/Hint/));
     expect(screen.getByText(/Worked step · 3 of 3/)).toBeTruthy();
-    expect(screen.getByText(/2x = 8, so divide both sides by 2\./)).toBeTruthy();
+    const workedStep = screen.getByText(/Worked step · 3 of 3/).closest("div");
+    expect(workedStep?.textContent).toContain("so divide both sides by 2.");
+    expect(workedStep?.querySelector(".math-inline")).toBeTruthy();
   });
 });
 

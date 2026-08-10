@@ -82,7 +82,7 @@ export function Rich({ text, early }: { text: string; early?: boolean }) {
   const parts = text.split("**");
   return (
     <p className={`${early ? "text-xl" : "text-lg"} leading-relaxed`}>
-      {parts.map((p, i) => (i % 2 === 1 ? <strong key={i}><MathProse text={p} /></strong> : <span key={i}><MathProse text={p} /></span>))}
+      {parts.map((p, i) => (i % 2 === 1 ? <strong key={i}><MathProse text={p} includeArithmetic /></strong> : <span key={i}><MathProse text={p} includeArithmetic /></span>))}
     </p>
   );
 }

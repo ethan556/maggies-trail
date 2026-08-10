@@ -89,3 +89,19 @@ Wave 01 remains closed for product-state truth. S221 executed every available no
 | CL-P1-048 | P1 | MCQ blind-guess leakage | 697 of 3,293 authored/remedial MCQ moments trigger correct-option length or punctuation leakage heuristics. | **OPEN — WAVE C REVIEW** | Human-review each FAIL row in `MCQ_DISTRACTOR_AUDIT.csv`; remove leakage and map distractors to misconceptions without changing judgment tasks merely to lower MCQ count. |
 | CL-P1-049 | P1 | Prediction ceremony | 200 of 1,362 authored prediction gates do not meet the direct causal surface threshold in the deterministic audit. | **OPEN — WAVE D REVIEW** | Review `PREDICTION_GATE_AUDIT.csv`; remove duplicated/non-causal gates, retain informative ungraded prediction → action → reveal loops. |
 
+## Session 227 Premium Rebuild Wave-B update
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P1-047 | P1 | Mathematical notation backlog | The shared pipeline covered caret powers only and left high-frequency fraction, radical, arithmetic, hint, explanation, review, and mastery-lens surfaces outside the canonical boundary. | **CLOSED — WAVE B BOUNDARY** | One conservative author-shorthand → TeX → KaTeX/MathML route recognizes 9,327/9,576 B/C risk signatures across 879 lessons; 249 complex/false-positive rows are retained in `MATH_TYPESETTING_WAVE_B_RESIDUAL.csv`; 3×2 exponent matrix plus fraction/radical spot checks pass. Reopen on raw core notation, false conversion, missing MathML, or renderer duplication. |
+| CL-P1-050 | P1 | Dark-theme math contrast | `.dark .lesson-stage` used a dark gradient while the stage and widget palette pinned text to ink, making prompts and equations nearly unreadable. | **CLOSED — WAVE B** | Dark stage restored to paper-light gradient with ink; all 390/768/1440 dark exponent states use the corrected contract; nominal prompt contrast 12.96:1; verifier pins the rule. |
+| CL-P1-051 | P1 | Mobile visual labels | `asv-01-01`'s triangle figure clips the right-side height label and overlaps the center label at 390 px. | **OPEN — WAVE E** | Evidence: `PREMIUM_REBUILD_SCREENSHOTS_S227/asv-01-01-step1-390-light-after.png`. Repair through the visual rebuild queue with SR-label parity; do not mix it into typesetting architecture. |
+
+## Session 228 Premium Rebuild Wave-C batch-1 update
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P1-048 | P1 | MCQ blind-guess leakage | 697 of 3,293 MCQ moments exposed a correct-answer length or punctuation clue. Four repeated Grade 5 decimal patterns accounted for 22 high-frequency rows. | **IN PROGRESS — 22/697 REMEDIATED** | The 22 target rows now pass the deterministic blind-guess check; all distractors and authored feedback remain intact; regenerated queue has 675 rows. Continue Wave C by learner harm × frequency × visibility × strategic importance. |
+| CL-P1-052 | P1 | Learner-screen disclosure | The collapsed CML surface exposed “Mastery lens,” lifecycle badges, “Deep dive,” a generic multi-domain action goal, and representation data while the learner was still solving the task. | **CLOSED — PROGRESSIVE DISCLOSURE** | Collapsed state is one optional, task-specific prompt; lifecycle/color-key metadata and preview strip are removed; expanded exponent copy is rule-specific; all visible controls are at least 44 px and the 390 px state has no overflow. |
+| CL-P1-053 | P1 | Exponent visual meaning | `ep-01-02` paired a same-base product-rule illustration (`a³·a²=a⁵`) with power-of-a-power prose (`(aᵐ)ⁿ=aᵐⁿ`), visually contradicting the lesson explanation. | **CLOSED — RULE-SPECIFIC VISUALS** | The existing power-of-a-power factor-group asset now shows two copies of `2³` producing six factors; the separate product-of-powers illustration remains on its own rule state; interactive labels explain the repeated groups without exposing `task: exponentChain`. |
+

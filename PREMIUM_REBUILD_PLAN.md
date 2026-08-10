@@ -17,13 +17,17 @@ Objective: make the active mathematical object the primary visual and semantic f
 
 Exit gate: the mathematical prompt/model begins materially higher in the viewport; exactly one visible lesson heading remains; no active-work trail atmosphere, waypoint card, or clearing label is rendered; all current-source gates pass or have a documented pre-existing exception.
 
-## Wave B — canonical math typesetting
+## Wave B — canonical math typesetting (implemented in S227)
 
 Use `MATH_TYPESETTING_AUDIT.csv` to convert the highest-risk B/C rows first. Provide one accessible KaTeX + MathML path for prose, prompts, options, feedback, figures, and summaries. Preserve ordinary text where mathematical rendering adds no value. Validate line breaking, zoom, copy/paste, screen-reader output, and dark theme.
 
-## Wave C — MCQ distractor remediation
+Exit evidence: the canonical boundary recognizes 9,327/9,576 B/C risk signatures across 879 lessons; core learner surfaces share one KaTeX + MathML route; 249 complex/false-positive rows remain explicitly reviewed rather than blindly converted; the 3×2 exponent matrix is free of raw caret notation, overflow, sub-44 px targets, and dark-stage contrast failure. Physical screen-reader/zoom/device gates remain CL-P1-035.
+
+## Wave C — MCQ distractor remediation (batch 1 implemented in S228)
 
 Use `MCQ_DISTRACTOR_AUDIT.csv`. Fix FAIL rows by removing length/punctuation/notation leakage and grounding every distractor in a misconception, `commonError`, or documented rationale. Do not convert judgment tasks merely to reduce an MCQ count.
+
+S228 sealed the first evidence-backed batch: four repeated Grade 5 decimal misconception patterns across 22 authored/remedial checks now use concise parallel answer labels while retaining every authored distractor and feedback rationale. The blind-guess queue fell from 697 to 675 rows. Wave C remains active; continue by frequency and learner harm rather than mechanically editing every flagged row.
 
 ## Wave D — prediction rationalization
 
